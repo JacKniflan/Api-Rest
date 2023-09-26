@@ -1,18 +1,28 @@
-import { Column, Entity, ObjectId, ObjectIdColumn } from "typeorm";
-
-
+import { IsNotEmpty } from "class-validator";
+import { ObjectId } from "mongodb";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ObjectIdColumn,
+  Unique,
+  UpdateDateColumn,
+} from "typeorm";
 
 @Entity()
-
+@Unique(["name"])
 export class Product {
-
-    @ObjectIdColumn()
-    id: ObjectId;
-    @Column()
-    name: string;
-    @Column()
-    description: string;
-    @Column()
-    price: number;
-
+  @ObjectIdColumn()
+  _id: ObjectId;
+  @Column()
+  @IsNotEmpty()
+  name: string;
+  @Column()
+  description: string;
+  @Column()
+  price: number;
+  @CreateDateColumn()
+  createrAt: Date;
+  @UpdateDateColumn()
+  updatedAt: Date;
 }

@@ -3,7 +3,6 @@ import product from "./product";
 
 const routes = Router();
 
-
-routes.use('/product', product)
+routes.use("/products", product);
 
 export default routes;

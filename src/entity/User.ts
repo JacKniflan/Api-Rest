@@ -1,18 +1,21 @@
-import { Entity, ObjectIdColumn, ObjectId, Column } from "typeorm"
-
+import { IsEmail } from "class-validator";
+import { Entity, ObjectIdColumn, ObjectId, Column, Unique } from "typeorm";
+import * as bcrypt from "bcryptjs";
 @Entity()
+@Unique(["email"])
 export class User {
+  @ObjectIdColumn()
+  id: ObjectId;
+  @Column()
+  name: string;
+  @Column()
+  @IsEmail()
+  email: string;
+  @Column()
+  password: string;
 
-    @ObjectIdColumn()
-    id: ObjectId
-
-    @Column()
-    firstName: string
-
-    @Column()
-    lastName: string
-
-    @Column()
-    age: number
-
+  hashPassword(): void {
+    const salt = bcrypt.genSaltSync(10);
+    this.password = bcrypt.hashSync(this.password, salt);
+  }
 }
